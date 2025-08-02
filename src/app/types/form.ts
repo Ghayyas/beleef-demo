@@ -4,12 +4,3 @@ export interface FormData extends Record<string, string> {
   date: string;
   price: string;
 }
-
-export interface DocumentResponse {
-  data: {
-    documentFile: {
-      downloadUrl: string;
-      filename: string;
-    };
-  };
-}

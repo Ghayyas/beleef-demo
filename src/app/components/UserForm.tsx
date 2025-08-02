@@ -1,8 +1,7 @@
 'use client';
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import documentService from '../services/documentService';
-import DownloadModal from './modals/DownloadModal';
-import { FormData, DocumentResponse } from '../types/form';
+import { FormData } from '../types/form';
 
 const UserForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -13,10 +12,8 @@ const UserForm: React.FC = () => {
   });
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const [downloadUrl, setDownloadUrl] = useState<string>('');
-  const [apiResponse, setApiResponse] = useState<DocumentResponse | null>(null);
   const [error, setError] = useState<string>('');
+  const [successMessage, setSuccessMessage] = useState<string>('');
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -30,25 +27,20 @@ const UserForm: React.FC = () => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
-    setDownloadUrl('');
+    setSuccessMessage('');
 
     try {
       const result = await documentService.generateDocument(formData as Record<string, unknown>);
-            console.log({result});
-      if (result.success) {
-        console.log('Document generated:', result.data);
-        setApiResponse(result.data as DocumentResponse);
+      console.log({result});
 
-        // Set download URL and show modal
-        if (result.data?.data?.documentFile?.downloadUrl) {
-          const downloadUrl = result.data.data.documentFile.downloadUrl;
-          console.log('Download URL:', downloadUrl);
-          console.log('Document filename:', result.data.data.documentFile.filename);
-          setDownloadUrl(downloadUrl);
-          setShowModal(true);
-        } else {
-          console.error('No download URL found in response:', result.data);
-        }
+      if (result.success) {
+        console.log('Document generated and downloaded:', result.filename);
+        setSuccessMessage(`✅ Document "${result.filename}" generated and downloaded successfully!`);
+
+        // Reset form after successful generation
+        setTimeout(() => {
+          setSuccessMessage('');
+        }, 5000);
       } else {
         setError(result.error ?? 'Failed to generate document');
         console.error('Failed to generate document:', result.error);
@@ -61,26 +53,7 @@ const UserForm: React.FC = () => {
     }
   };
 
-  const handleDownload = async () => {
-    if (downloadUrl && apiResponse?.data?.documentFile?.filename) {
-      const result = await documentService.downloadDocument(downloadUrl, apiResponse.data.documentFile.filename);
-      if (!result.success) {
-        setError(result.error ?? 'Failed to download document');
-      }
-    } else {
-      // Fallback: just trigger download with generic filename
-      if (downloadUrl) {
-        const result = await documentService.downloadDocument(downloadUrl, 'document.pdf');
-        if (!result.success) {
-          setError(result.error ?? 'Failed to download document');
-        }
-      }
-    }
-  };
 
-  const handleCloseModal = (): void => {
-    setShowModal(false);
-  };
 
   const handleFillTestData = (testData: FormData): void => {
     setFormData(testData);
@@ -194,7 +167,7 @@ const UserForm: React.FC = () => {
             className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400 disabled:cursor-not-allowed"
             disabled={isLoading}
           >
-            {isLoading ? 'Generating PDF...' : 'Generate PDF Document'}
+            {isLoading ? 'Generating & Downloading PDF...' : 'Generate & Download PDF'}
           </button>
 
           {error && (
@@ -203,13 +176,11 @@ const UserForm: React.FC = () => {
             </div>
           )}
 
-          <DownloadModal
-            isOpen={showModal}
-            onClose={handleCloseModal}
-            downloadUrl={downloadUrl}
-            documentData={formData}
-            onDownload={handleDownload}
-          />
+          {successMessage && (
+            <div className="mt-4 bg-green-50 border border-green-200 rounded-md p-4">
+              <p className="text-green-600">{successMessage}</p>
+            </div>
+          )}
         </form>
       </div>
     </div>

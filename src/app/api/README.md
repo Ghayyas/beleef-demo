@@ -5,7 +5,7 @@
 **POST** `/api/generate-document`
 
 ### Description
-Generates a PDF document by filling a template with provided form data.
+Generates a PDF document by filling a template with provided form data. Returns the PDF file directly for download.
 
 ### Request Body
 ```json
@@ -19,27 +19,11 @@ Generates a PDF document by filling a template with provided form data.
 ```
 
 ### Response
-```json
-{
-  "success": true,
-  "message": "Document generated successfully",
-  "data": {
-    "documentId": "string",
-    "generatedAt": "ISO date string",
-        "customerInfo": {
-      "address": "string",
-      "price": "string",
-      "date": "string",
-      "fullName": "string"
-    },
-    "documentFile": {
-      "filename": "string",
-      "downloadUrl": "string",
-      "filePath": "string"
-    }
-  }
-}
-```
+- **Content-Type**: `application/pdf`
+- **Content-Disposition**: `attachment; filename="filled_document_[timestamp].pdf"`
+- **Body**: Binary PDF data
+
+The API returns the generated PDF file directly as a binary response, ready for download.
 
 ### Error Responses
 - **400 Bad Request**: Missing required fields
@@ -48,6 +32,7 @@ Generates a PDF document by filling a template with provided form data.
 
 ### Example Usage
 ```bash
+# Generate and download PDF directly
 curl -X POST http://localhost:3000/api/generate-document \
   -H "Content-Type: application/json" \
   -d '{
@@ -55,10 +40,18 @@ curl -X POST http://localhost:3000/api/generate-document \
     "fullName": "John Doe",
     "date": "2024-01-15",
     "price": "150000"
-  }'
+  }' \
+  --output document.pdf
 ```
+
+### Features
+- ✅ **Vercel Compatible**: No file system writes required
+- ✅ **Direct PDF Download**: Returns PDF binary data directly
+- ✅ **Automatic Download**: Frontend triggers download automatically
+- ✅ **Form Data Integration**: Fills PDF with user-submitted data
+- ✅ **Error Handling**: Proper error responses for missing templates/data
 
 ### File Structure
 - Templates: `public/templates/`
-- Generated files: `public/uploads/`
 - PDF Utils: `src/app/utils/pdfUtils.ts`
+- Frontend Service: `src/app/services/documentService.ts`

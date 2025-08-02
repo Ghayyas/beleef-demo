@@ -11,8 +11,7 @@ interface FormData {
 
 interface FillPDFResult {
   filename: string;
-  filePath: string;
-  downloadUrl: string;
+  pdfBytes: Uint8Array;
   success: boolean;
 }
 
@@ -159,21 +158,18 @@ export class PDFUtils {
         });
       }
 
-      // Save the PDF
+      // Generate PDF in memory (no file system write needed)
       const timestamp = Date.now();
       const filename = `filled_document_${timestamp}.pdf`;
-      const outputPath = path.join(this.uploadsPath, filename);
 
       const pdfBytes = await pdfDoc.save();
-      await fs.writeFile(outputPath, pdfBytes);
 
-      console.log(`✅ PDF saved successfully: ${filename}`);
-      console.log(`📂 File location: ${outputPath}`);
+      console.log(`✅ PDF generated successfully: ${filename}`);
+      console.log(`📦 PDF size: ${pdfBytes.length} bytes`);
 
       return {
         filename,
-        filePath: outputPath,
-        downloadUrl: `/uploads/${filename}`,
+        pdfBytes,
         success: true
       };
 

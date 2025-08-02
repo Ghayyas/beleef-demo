@@ -47,24 +47,14 @@ export async function POST(request: NextRequest) {
     const formData = { address, price, date, fullName };
     const result = await pdfUtils.fillPDFTemplate(templateName, formData);
 
-    return NextResponse.json({
-      success: true,
-      message: 'Document generated successfully',
-      data: {
-        documentId: result.filename.replace('.pdf', ''),
-        generatedAt: new Date().toISOString(),
-        customerInfo: {
-          address,
-          price,
-          date,
-          fullName
-        },
-        documentFile: {
-          filename: result.filename,
-          downloadUrl: result.downloadUrl,
-          filePath: result.filePath
-        }
-      }
+    // Return PDF directly as response (Vercel-compatible)
+    return new NextResponse(result.pdfBytes, {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': `attachment; filename="${result.filename}"`,
+        'Content-Length': result.pdfBytes.length.toString(),
+      },
     });
 
   } catch (error) {
