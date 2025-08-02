@@ -36,23 +36,23 @@ const DownloadModal: React.FC<DownloadModalProps> = ({
             <p className="text-gray-600">Your document has been generated with the following details:</p>
           </div>
           <div className="bg-gray-50 rounded-lg p-4 space-y-3 border border-gray-200">
-            <p className="flex justify-between text-sm">
+            <p className=" text-gray-600 flex justify-between text-sm">
               <span className="font-medium text-gray-600">Full Name:</span>
               <span>{documentData.fullName}</span>
             </p>
             <p className="flex justify-between text-sm">
               <span className="font-medium text-gray-600">Address:</span>
-              <span className="text-right flex-1 ml-4">{documentData.address}</span>
+              <span className="text-right text-gray-600 flex-1 ml-4">{documentData.address}</span>
             </p>
-            <p className="flex justify-between text-sm">
+            <p className="text-gray-600 flex justify-between text-sm">
               <span className="font-medium text-gray-600">Date:</span>
               <span>{documentData.date}</span>
             </p>
-            <p className="flex justify-between text-sm">
+            <p className="text-gray-600 flex justify-between text-sm">
               <span className="font-medium text-gray-600">Price:</span>
               <span> {documentData.price}</span>
             </p>
-        
+
           </div>
           <div className="mt-8 flex justify-center">
             <button

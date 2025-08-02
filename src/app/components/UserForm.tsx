@@ -41,10 +41,10 @@ const UserForm: React.FC = () => {
 
         // Set download URL and show modal
         if (result.data?.data?.documentFile?.downloadUrl) {
-          const fullDownloadUrl = `https://docbuilder-makg.onrender.com${result.data.data.documentFile.downloadUrl}`;
-          console.log('Full download URL:', fullDownloadUrl);
+          const downloadUrl = result.data.data.documentFile.downloadUrl;
+          console.log('Download URL:', downloadUrl);
           console.log('Document filename:', result.data.data.documentFile.filename);
-          setDownloadUrl(fullDownloadUrl);
+          setDownloadUrl(downloadUrl);
           setShowModal(true);
         } else {
           console.error('No download URL found in response:', result.data);

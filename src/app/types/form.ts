@@ -1,4 +1,4 @@
-export interface FormData extends Record<string, unknown> {
+export interface FormData extends Record<string, string> {
   fullName: string;
   address: string;
   date: string;
