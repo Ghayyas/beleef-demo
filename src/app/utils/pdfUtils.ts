@@ -52,62 +52,19 @@ export class PDFUtils {
       const fontSize = 14;
       const textColor = rgb(0, 0, 0);
 
-      // Add Full Name on Page 1 (more visible)
-      if (formData.fullName) {
-        console.log(`📝 Adding Full Name: "${formData.fullName}"`);
-        firstPage.drawText(`Full Name: ${formData.fullName}`, {
-          x: 50,
-          y: height - 100,
-          size: fontSize,
-          color: textColor,
-        });
-        console.log(`✅ Full Name placed on page 1 at (50, ${height - 100})`);
-      }
+      // Add form data to proper compliance document positions only
 
-      // Add Address on Page 1 (more visible)
+      // Add Address to Pages 2 and 4 (compliance form fields)
       if (formData.address) {
-        console.log(`📝 Adding Address: "${formData.address}"`);
-        firstPage.drawText(`Address: ${formData.address}`, {
-          x: 50,
-          y: height - 140,
-          size: fontSize,
-          color: textColor,
-        });
-        console.log(`✅ Address placed on page 1 at (50, ${height - 140})`);
-      }
+        console.log(`📝 Adding Address: "${formData.address}" to compliance pages`);
 
-      // Add Date on Page 1 (more visible)
-      if (formData.date) {
-        console.log(`📝 Adding Date: "${formData.date}"`);
-        firstPage.drawText(`Date: ${formData.date}`, {
-          x: 50,
-          y: height - 180,
-          size: fontSize,
-          color: textColor,
-        });
-        console.log(`✅ Date placed on page 1 at (50, ${height - 180})`);
-      }
-
-      // Add Price on Page 1 (more visible)
-      if (formData.price) {
-        console.log(`📝 Adding Price: "${formData.price}"`);
-        firstPage.drawText(`Price: $${formData.price}`, {
-          x: 50,
-          y: height - 220,
-          size: fontSize,
-          color: textColor,
-        });
-        console.log(`✅ Price placed on page 1 at (50, ${height - 220})`);
-      }
-
-      // Also add to original positions for compliance
-      if (formData.address) {
         secondPage.drawText(formData.address, {
           x: 195,
           y: 660,
           size: fontSize,
           color: textColor,
         });
+        console.log(`✅ Address placed on Page 2 at (195, 660)`);
 
         fourthPage.drawText(formData.address, {
           x: 195,
@@ -115,24 +72,32 @@ export class PDFUtils {
           size: fontSize,
           color: textColor,
         });
+        console.log(`✅ Address placed on Page 4 at (195, 658.5)`);
       }
 
+      // Add Price to Page 3 (compliance form field)
       if (formData.price) {
+        console.log(`📝 Adding Price: "${formData.price}" to compliance page`);
         thirdPage.drawText(formData.price, {
           x: 140,
           y: 305,
           size: fontSize,
           color: textColor,
         });
+        console.log(`✅ Price placed on Page 3 at (140, 305)`);
       }
 
+      // Add Date to Pages 3, 4, and 5 (compliance form fields)
       if (formData.date) {
+        console.log(`📝 Adding Date: "${formData.date}" to compliance pages`);
+
         thirdPage.drawText(formData.date, {
           x: 400,
           y: 155,
           size: fontSize,
           color: textColor,
         });
+        console.log(`✅ Date placed on Page 3 at (400, 155)`);
 
         fourthPage.drawText(formData.date, {
           x: 410,
@@ -140,6 +105,7 @@ export class PDFUtils {
           size: fontSize,
           color: textColor,
         });
+        console.log(`✅ Date placed on Page 4 at (410, 128)`);
 
         fifthPage.drawText(formData.date, {
           x: 120,
@@ -147,15 +113,19 @@ export class PDFUtils {
           size: fontSize,
           color: textColor,
         });
+        console.log(`✅ Date placed on Page 5 at (120, 280)`);
       }
 
+      // Add Full Name to Page 5 (compliance form field)
       if (formData.fullName) {
+        console.log(`📝 Adding Full Name: "${formData.fullName}" to compliance page`);
         fifthPage.drawText(formData.fullName, {
           x: 150,
           y: 350,
           size: fontSize,
           color: textColor,
         });
+        console.log(`✅ Full Name placed on Page 5 at (150, 350)`);
       }
 
       // Generate PDF in memory (no file system write needed)
