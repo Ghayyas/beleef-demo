@@ -24,3 +24,291 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.App {
+  text-align: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Form Styles */
+.user-form-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.user-form-wrapper {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 500px;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.user-form-title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: left;
+}
+
+.user-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+.user-form-label {
+  font-weight: 600;
+  color: #333;
+  font-size: 15px;
+  margin-bottom: 8px;
+  text-align: left;
+  display: block;
+}
+
+.user-form-input,
+.user-form-textarea {
+  padding: 12px 16px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background-color: #fafafa;
+}
+
+/* Select dropdown specific styling */
+select.user-form-input {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 20px;
+  padding-right: 40px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* Price range container for side by side layout */
+.price-range-container {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+}
+
+.price-range-container .user-form-group {
+  flex: 1;
+  margin-bottom: 5px;
+}
+
+.user-form-input:focus,
+.user-form-textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.user-form-textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: inherit;
+}
+
+.user-form-submit-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.user-form-submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.user-form-submit-button:active {
+  transform: translateY(0);
+}
+
+.user-form-submit-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.user-form-submit-button:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Download Section Styles */
+.download-section {
+  margin-top: 30px;
+  padding: 25px;
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  border-radius: 8px;
+  text-align: center;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.download-section h3 {
+  color: white;
+  margin: 0 0 15px 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.download-button {
+  display: inline-block;
+  background: white;
+  color: #4CAF50;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  border: 2px solid white;
+}
+
+.download-button:hover {
+  background: transparent;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .user-form-container {
+    padding: 10px;
+  }
+
+  .user-form-wrapper {
+    padding: 30px 20px;
+    margin: 10px;
+  }
+
+  .user-form-title {
+    font-size: 24px;
+  }
+
+  .user-form-input,
+  .user-form-textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+@media (max-width: 480px) {
+  .user-form-wrapper {
+    padding: 20px 15px;
+  }
+
+  .user-form-title {
+    font-size: 22px;
+    margin-bottom: 25px;
+  }
+
+  .user-form {
+    gap: 15px;
+  }
+
+  .user-form-submit-button {
+    padding: 12px 20px;
+    font-size: 15px;
+  }
+
+  /* Stack price fields vertically on small screens */
+  .price-range-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* Error Section */
+.error-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #fee;
+  border: 1px solid #fcc;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.error-message {
+  margin: 0;
+  color: #c33;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Test Data Button */
+.test-data-section {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.test-data-button {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+}
+
+.test-data-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+}
